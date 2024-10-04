@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 
 class MoodTrackerScreen extends StatefulWidget {
   const MoodTrackerScreen({super.key});
+
   @override
   _MoodTrackerScreenState createState() => _MoodTrackerScreenState();
 }
+
 class _MoodTrackerScreenState extends State<MoodTrackerScreen> {
   double _moodValue = 2;
+  List<String> moodEntries = [];
+  int _keyCounter = 0;
+
   String getMoodText(double value) {
     if (value <= 1) {
       return 'Ужасное';
@@ -20,6 +25,20 @@ class _MoodTrackerScreenState extends State<MoodTrackerScreen> {
       return 'Отличное';
     }
   }
+
+  void _addMoodEntry() {
+    setState(() {
+      moodEntries.add(getMoodText(_moodValue) + ' ' + _keyCounter.toString());
+      _keyCounter++;
+    });
+  }
+
+  void _removeMoodEntry(int index) {
+    setState(() {
+      moodEntries.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +48,7 @@ class _MoodTrackerScreenState extends State<MoodTrackerScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Slider(
@@ -53,6 +72,7 @@ class _MoodTrackerScreenState extends State<MoodTrackerScreen> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                _addMoodEntry();
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Настроение записано')),
                 );
@@ -77,6 +97,22 @@ class _MoodTrackerScreenState extends State<MoodTrackerScreen> {
                 minimumSize: const Size(double.infinity, 50),
               ),
               child: const Text('Календарь'),
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                itemCount: moodEntries.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    key: ValueKey('mood_$index'),
+                    title: Text(moodEntries[index]),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                      onPressed: () => _removeMoodEntry(index),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
