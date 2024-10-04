@@ -10,6 +10,7 @@ class MoodTrackerScreen extends StatefulWidget {
 class _MoodTrackerScreenState extends State<MoodTrackerScreen> {
   double _moodValue = 2;
   List<String> moodEntries = [];
+  int _keyCounter = 0;
 
   String getMoodText(double value) {
     if (value <= 1) {
@@ -27,7 +28,8 @@ class _MoodTrackerScreenState extends State<MoodTrackerScreen> {
 
   void _addMoodEntry() {
     setState(() {
-      moodEntries.add(getMoodText(_moodValue));
+      moodEntries.add(getMoodText(_moodValue) + ' ' + _keyCounter.toString());
+      _keyCounter++;
     });
   }
 
@@ -102,6 +104,7 @@ class _MoodTrackerScreenState extends State<MoodTrackerScreen> {
                 itemCount: moodEntries.length,
                 itemBuilder: (context, index) {
                   return ListTile(
+                    key: ValueKey('mood_$index'),
                     title: Text(moodEntries[index]),
                     trailing: IconButton(
                       icon: const Icon(Icons.delete, color: Colors.red),
