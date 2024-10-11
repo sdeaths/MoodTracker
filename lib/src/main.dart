@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moodtracker/src/auth.dart';
 import 'package:moodtracker/src/moodtracker.dart';
+import 'package:moodtracker/src/registration.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: AuthScreen()
+      home: RegistrationScreen()
     );
   }
 }
