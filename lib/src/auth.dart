@@ -12,7 +12,7 @@ class AuthScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const TextField(
               decoration: InputDecoration(labelText: 'Логин'),
@@ -23,11 +23,16 @@ class AuthScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/home');
+              },
               child: const Text('Войти'),
             ),
+            const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/registration');
+              },
               child: const Text('Регистрация'),
             ),
           ],
@@ -36,4 +41,3 @@ class AuthScreen extends StatelessWidget {
     );
   }
 }
-

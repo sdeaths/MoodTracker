@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:moodtracker/src/auth.dart';
-import 'package:moodtracker/src/moodtracker.dart';
 import 'package:moodtracker/src/registration.dart';
+
+import 'home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,12 +14,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Mood Tracker',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: RegistrationScreen()
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const AuthScreen(),
+        '/registration': (context) => const RegistrationScreen(),
+        '/home': (context) => HomeScreen(),
+      },
     );
   }
 }

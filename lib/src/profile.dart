@@ -1,41 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
-
-  @override
-  _ProfileScreenState createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  List<String> items = ['Пол: Женский', 'Настроение: Отличное'];
-  int _keyCounter = 0;
-
-  void _addNewItem() {
-    setState(() {
-      items.add('Новый элемент: Значение ${_keyCounter++}');
-    });
-  }
-
-  void _removeItem(int index) {
-    setState(() {
-      if (index >= 0 && index < items.length) {
-        items.removeAt(index);
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Профиль'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: _addNewItem,
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -59,24 +31,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            Expanded(
-              child: ListView.separated(
-                itemCount: items.length,
-                separatorBuilder: (BuildContext context, int index) =>
-                const Divider(color: Colors.grey, thickness: 1),
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    key: ValueKey(items[index]),
-                    title: Text(
-                      items[index],
-                      style: const TextStyle(fontSize: 18),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Пол
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Пол:',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        Text(
+                          'Женский',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ],
                     ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete, color: Colors.red),
-                      onPressed: () => _removeItem(index),
+                    Divider(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Настроение:',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        Text(
+                          'Отличное',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ],
                     ),
-                  );
-                },
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 24),
@@ -90,11 +83,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addNewItem,
-        backgroundColor: Colors.green,
-        child: const Icon(Icons.add),
       ),
     );
   }
