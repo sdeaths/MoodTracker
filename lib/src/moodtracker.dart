@@ -25,14 +25,12 @@ class _MoodTrackerScreenState extends State<MoodTrackerScreen> {
       return 'Отличное';
     }
   }
-
   void _addMoodEntry() {
     setState(() {
       moodEntries.add(getMoodText(_moodValue) + ' ' + _keyCounter.toString());
       _keyCounter++;
     });
   }
-
   void _removeMoodEntry(int index) {
     setState(() {
       moodEntries.removeAt(index);
@@ -48,8 +46,6 @@ class _MoodTrackerScreenState extends State<MoodTrackerScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Slider(
               value: _moodValue,
@@ -71,40 +67,28 @@ class _MoodTrackerScreenState extends State<MoodTrackerScreen> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                _addMoodEntry();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Настроение записано')),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 50),
-              ),
-              child: const Text('Записать'),
+              onPressed: _addMoodEntry,
+              child: const Text('Записать настроение'),
             ),
             const SizedBox(height: 10),
             ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 50),
-              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/profile');
+              },
               child: const Text('Перейти к профилю'),
             ),
             const SizedBox(height: 10),
             ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 50),
-              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/calendar');
+              },
               child: const Text('Календарь'),
             ),
-            const SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
                 itemCount: moodEntries.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    key: ValueKey('mood_$index'),
                     title: Text(moodEntries[index]),
                     trailing: IconButton(
                       icon: const Icon(Icons.delete, color: Colors.red),
