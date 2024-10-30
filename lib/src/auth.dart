@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
+
+  @override
+  State<AuthScreen> createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen> {
+  Future<void> _performLogin() {
+    return Future.delayed(const Duration(seconds: 2)).then((_) {
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +36,7 @@ class AuthScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/home');
-              },
+              onPressed: _performLogin,
               child: const Text('Войти'),
             ),
             const SizedBox(height: 20),
